@@ -6,10 +6,9 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class RetrofitApiClient {
+public class RetrofitSessionClient {
 
-    private static final String BASE_URL_AUTH = "https://account.demandware.com/dw/";
-    private static final String BASE_URL_SESSION = "https://zzkf-003.sandbox.us01.dx.commercecloud.salesforce.com/dw/";
+    private static final String BASE_URL= "https://zzkf-003.sandbox.us01.dx.commercecloud.salesforce.com/dw/";
 
     private static Retrofit.Builder builder
             = new Retrofit.Builder()

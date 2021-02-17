@@ -11,9 +11,9 @@ public interface ApiInterface {
 
     @POST("oauth2/access_token")
     Call<Void> getAuth(@HeaderMap Map<String, String> header,
-                                                @Query("username") String userName,
-                                                @Query("Pass") String password);
+                       @Query("username") String userName,
+                       @Query("Pass") String password);
 
     @POST("shop/v21_2/sessions")
-    Call<Void> session(@HeaderMap Map<String, String> header);
+    Call<Void> loadSession(@HeaderMap Map<String, String> header);
 }

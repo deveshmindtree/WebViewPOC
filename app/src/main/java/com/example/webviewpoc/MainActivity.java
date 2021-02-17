@@ -15,30 +15,25 @@ public class MainActivity extends AppCompatActivity {
     private static final String BEARER = "Bearer";
     private static final String CONTENT_TYPE = "Content-Type";
     private static final String CONTENT_TYPE_VALUE = "application/json";
-    private ApiInterface service = RetrofitApiClient.createService(ApiInterface.class);
+    private ActivityMainBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
-
-        binding.button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
-
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        getAuthToken();
         setContentView(binding.getRoot());
     }
 
     public void getAuthToken() {
-        Call<AuthModel> callAsync = service.getAuth("");
-
+        ApiInterface authService = RetrofitAuthClient.createService(ApiInterface.class);
+        Call<AuthModel> callAsync = authService.getAuth("");
         callAsync.enqueue(new Callback<AuthModel>() {
             @Override
             public void onResponse(Call<AuthModel> call, Response<AuthModel> response) {
                 AuthModel user = response.body();
+
+                loadSession();
             }
 
             @Override
@@ -49,11 +44,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void loadSession() {
-        Call<Void> callAsync = service.session();
-
+        ApiInterface sessionService = RetrofitSessionClient.createService(ApiInterface.class);
+        Call<Void> callAsync = sessionService.loadSession();
         callAsync.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
+                binding.button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                    }
+                });
             }
 
             @Override
