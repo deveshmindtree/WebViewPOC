@@ -26,26 +26,15 @@ public class WebActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityWebBinding.inflate(getLayoutInflater());
 
-      /*  String cookieString = "cookie_name=cookie_value; path=/";
-        CookieManager.getInstance().setCookie(postUrl, cookieString);*/
-
-        /*CookieSyncManager cookieSyncManager = CookieSyncManager.createInstance(binding.webView.getContext());
-        CookieManager cookieManager = CookieManager.getInstance();
-        cookieManager.setAcceptCookie(true);
-        cookieManager.removeSessionCookie();
-        cookieManager.setCookie("http://xx.example.com","mid="+MySession.GetSession().sessionId+" ; Domain=.example.com");
-        cookieSyncManager.sync();*/
-
         String myUrl = "https://zzkf-003.sandbox.us01.dx.commercecloud.salesforce.com/";
         CookieSyncManager.createInstance(this);
         CookieManager cookieManager = CookieManager.getInstance();
         cookieManager.setAcceptCookie(true);
         cookieManager.removeSessionCookie();
-        String cookieString = "oc_sfcc" + "=" + WebviewPocApp.authToken + "; domain=" + myUrl;
+        String cookieString = "oc_sfcc" + "=" + WebviewPocApp.authToken;
         Log.d("Auth:", WebviewPocApp.authToken);
         cookieManager.setCookie(myUrl, cookieString);
         CookieSyncManager.getInstance().sync();
-
 
         MyWebViewClient webViewClient = new MyWebViewClient();
         binding.webView.setWebViewClient(webViewClient);
