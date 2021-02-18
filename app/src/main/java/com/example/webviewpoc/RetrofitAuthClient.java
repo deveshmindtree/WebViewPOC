@@ -1,5 +1,6 @@
 package com.example.webviewpoc;
 
+import okhttp3.Credentials;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -33,19 +34,19 @@ public class RetrofitAuthClient {
         return retrofit.create(serviceClass);
     }
 
-    public static <S> S createService(Class<S> serviceClass, final String token) {
-        if (token != null) {
-            httpClient.interceptors().clear();
-            httpClient.addInterceptor( chain -> {
-                Request original = chain.request();
-                Request.Builder builder1 = original.newBuilder()
-                        .header("Authorization", token);
-                Request request = builder1.build();
-                return chain.proceed(request);
-            });
-            builder.client(httpClient.build());
-            retrofit = builder.build();
-        }
+    public static <S> S createServiceBasicAuth(Class<S> serviceClass) {
+
+        httpClient.interceptors().clear();
+        httpClient.addInterceptor( chain -> {
+            Request original = chain.request();
+            Request.Builder builder1 = original.newBuilder()
+                    .header("Authorization", Credentials.basic("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"));
+            Request request = builder1.build();
+            return chain.proceed(request);
+        });
+        builder.client(httpClient.build());
+        retrofit = builder.build();
+
         return retrofit.create(serviceClass);
     }
 }
